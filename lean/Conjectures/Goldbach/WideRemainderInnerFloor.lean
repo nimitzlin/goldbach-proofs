@@ -112,13 +112,16 @@ theorem wrfRemainder_measurable (n : ℕ) : MeasurableSet (wrfRemainder n) :=
 theorem wrfRemainder_disjoint_lowWide (n : ℕ) : Disjoint (wrfRemainder n) (wrfArcsLowWide n) := by
   rw [Set.disjoint_left]
   intro t ht ht'
-  exact ht.2 ht'.2
+  have hlow : t ∈ wrfLowPart n := by
+    rw [wrfLowPart, Set.mem_diff]
+    exact ⟨ht', ht.1.2⟩
+  exact ht.2 hlow
 
 /-- The remainder meets the original arcs in nothing. -/
 theorem wrfRemainder_disjoint_main (n : ℕ) : Disjoint (wrfRemainder n) (wrfArcsMain n) := by
   rw [Set.disjoint_left]
   intro t ht ht'
-  exact ht.1 ht'
+  exact ht.1.2 ht'
 
 end
 end Conjectures.Goldbach
